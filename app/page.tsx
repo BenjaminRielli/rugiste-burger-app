@@ -11,7 +11,7 @@ export default function Home() {
         <div className="container flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
             <TrendingUp className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">RUGISTE BURGER</span>
+            <span className="text-xl font-bold">RUGISTE BURGERS</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
             <Link href="#features" className="transition-colors hover:text-primary">
