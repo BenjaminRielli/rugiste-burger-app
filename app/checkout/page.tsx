@@ -41,8 +41,8 @@ export default function CheckoutPage() {
               </Link>
               <h1 className="text-3xl font-bold">Volver a la tienda</h1>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-              <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">	
+              <div className="order-1 md:order-none">
                 <Card>
                   <CardHeader>
                     <CardTitle>Método de Entrega</CardTitle>
@@ -185,7 +185,7 @@ export default function CheckoutPage() {
                                 </p>
                               </div>
                               <p className="font-semibold">
-                                {Math.round(item.price * item.quantity)}
+                                ${Math.round(item.price * item.quantity)}
                               </p>
                             </div>
                           ))}
