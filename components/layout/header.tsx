@@ -6,21 +6,21 @@ import { Menu } from "lucide-react"
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-muted/40 bg-background/80 backdrop-blur-md shadow-lg rounded-b-xl">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-4">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/rugisteburger.png" alt="Rugiste Burger Logo" width={45} height={45} />
-            <span className="text-xl font-bold">Rugiste Burger</span>
+            <Image src="/rugisteburger.png" alt="Rugiste Burger Logo" width={45} height={45} className="rounded-full shadow-md" />
+            <span className="text-2xl font-extrabold tracking-tight text-primary drop-shadow-sm">Rugiste Burger</span>
           </Link>
         </div>
 
         <div className="flex items-center gap-4">
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <Link href="/" className="transition-colors hover:text-primary">
+          <nav className="hidden md:flex items-center gap-6 text-base font-semibold">
+            <Link href="/" className="transition-colors duration-200 hover:text-primary/80 hover:underline underline-offset-4">
               Home
             </Link>
-            <Link href="/shop" className="transition-colors hover:text-primary">
+            <Link href="/shop" className="transition-colors duration-200 hover:text-primary/80 hover:underline underline-offset-4">
               Shop
             </Link>
           </nav>
@@ -34,13 +34,13 @@ export function Header() {
             <SheetContent side="left">
               <nav className="grid gap-6 text-lg font-medium">
                 <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
-                  <Image src="/rugisteburger.png" alt="Rugiste Burger Logo" width={45} height={45} />
+                  <Image src="/rugisteburger.png" alt="Rugiste Burger Logo" width={45} height={45} className="rounded-full shadow-md" />
                   <span>Rugiste Burger</span>
                 </Link>
-                <Link href="/" className="hover:text-foreground">
+                <Link href="/" className="hover:text-primary/80 hover:underline underline-offset-4">
                   Home
                 </Link>
-                <Link href="/shop" className="text-muted-foreground hover:text-foreground">
+                <Link href="/shop" className="hover:text-primary/80 hover:underline underline-offset-4">
                   Shop
                 </Link>
               </nav>

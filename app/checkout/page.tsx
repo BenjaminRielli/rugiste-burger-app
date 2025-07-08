@@ -61,6 +61,7 @@ export default function CheckoutPage() {
                             className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                           >
                             Delivery
+                            <span className="text-xs text-muted-foreground mt-1">Entre 20' y 45'</span>
                           </Label>
                         </div>
                         <div>
@@ -74,9 +75,15 @@ export default function CheckoutPage() {
                             className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                           >
                             Take Away
+                            <span className="text-xs text-muted-foreground mt-1">Entre 10' y 20'</span>
                           </Label>
                         </div>
                       </RadioGroup>
+                      {deliveryMethod === "takeaway" && (
+                        <div className="w-full text-center text-sm text-muted-foreground my-2">
+                          Dirección del local: Av. Brasil 677, Montevideo
+                        </div>
+                      )}
                       {deliveryMethod === "delivery" && (
                         <div className="space-y-4 pt-4">
                           <div className="space-y-2">

@@ -32,12 +32,13 @@ interface BurgerModalProps {
 }
 
 const ingredients = [
-  { id: "lettuce", name: "Lettuce", price: 0.5 },
-  { id: "tomato", name: "Tomato", price: 0.5 },
-  { id: "onions", name: "Onions", price: 0.5 },
-  { id: "pickles", name: "Pickles", price: 0.5 },
-  { id: "bacon", name: "Bacon", price: 1.5 },
-  { id: "extra-cheese", name: "Extra Cheese", price: 1.0 },
+  { id: "bacon", name: "Extra Carne", price: 100 },
+  { id: "extra-cheese", name: "Extra Queso", price: 100 },
+  { id: "pickles", name: "Extra Cebolla", price: 20 },
+  { id: "lettuce", name: "Lechuga", price: 100 },
+  { id: "tomato", name: "Tomate", price: 100 },
+  { id: "onions", name: "Cebolla", price: 100 },
+  
 ]
 
 export function BurgerModal({ isOpen, onClose, burger }: BurgerModalProps) {
