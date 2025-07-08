@@ -27,7 +27,9 @@ export default function Home() {
               Pricing
             </Link>
           </nav>
-          <Button>Get Started</Button>
+          <Button asChild>
+            <Link href="/shop">SHOP</Link>
+          </Button>
         </div>
       </header>
       <main className="flex-1">
