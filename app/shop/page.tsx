@@ -10,6 +10,7 @@ import Link from "next/link"
 import { Header } from "@/components/layout/header"
 import { useCart } from "@/context/cart-context"
 import { BurgerModal } from "@/components/burger-modal"
+import { useToast } from "@/components/ui/use-toast"
 
 interface MenuItem {
   id: number;
@@ -58,7 +59,7 @@ const menuItems: MenuItem[] = [
   {
     id: 6,
     name: "Papas Fritas",
-    description: "",
+    description: "Porción de papas fritas.",
     price: 250,
     image: "/fries.jpeg",
   },
@@ -82,6 +83,7 @@ export default function ShopPage() {
   const { cartItems, addToCart, removeFromCart, cartTotal } = useCart()
   const [selectedBurger, setSelectedBurger] = useState<MenuItem | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { toast } = useToast()
 
   const handleOpenModal = (burger: MenuItem) => {
     setSelectedBurger(burger)
@@ -91,6 +93,15 @@ export default function ShopPage() {
   const handleCloseModal = () => {
     setSelectedBurger(null)
     setIsModalOpen(false)
+  }
+
+  const handleAddToCart = (item: MenuItem) => {
+    addToCart(item)
+    toast({
+      title: "Producto agregado correctamente al carrito",
+      description: "",
+      duration: 2000,
+    })
   }
 
   return (
@@ -105,20 +116,35 @@ export default function ShopPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {menuItems.map((item) => (
                     <Card key={item.id}>
-                      <CardContent className="p-4">
-                        <div className="aspect-square relative mb-4">
-                          <Image src={item.image} alt={item.name} fill className="rounded-t-lg object-cover" />
+                      <CardContent className="p-4 flex flex-col h-full justify-between">
+                        <div>
+                          <div className="aspect-square relative mb-4 cursor-pointer" onClick={() =>
+                            item.name.toLowerCase().includes("burger")
+                              ? handleOpenModal(item)
+                              : undefined
+                          }>
+                            <Image src={item.image} alt={item.name} fill className="rounded-t-lg object-cover" />
+                          </div>
+                          <h3
+                            className="text-lg font-semibold cursor-pointer "
+                            onClick={() =>
+                              item.name.toLowerCase().includes("burger")
+                                ? handleOpenModal(item)
+                                : undefined
+                            }
+                          >
+                            {item.name}
+                          </h3>
+                          <p className="text-sm text-muted-foreground line-clamp-2 min-h-[40px]">{item.description}</p>
                         </div>
-                        <h3 className="text-lg font-semibold">{item.name}</h3>
-                        <p className="text-sm text-muted-foreground h-10">{item.description}</p>
                         <div className="flex justify-between items-center mt-4">
-                          <p className="text-lg font-bold">${item.price.toFixed(2)}</p>
+                          <p className="text-lg font-bold">${Math.round(item.price)}</p>
                           <Button
                             size="sm"
                             onClick={() =>
                               item.name.toLowerCase().includes("burger")
                                 ? handleOpenModal(item)
-                                : addToCart(item)
+                                : handleAddToCart(item)
                             }
                           >
                             Add to Cart
@@ -158,7 +184,7 @@ export default function ShopPage() {
                                 </p>
                               </div>
                               <div className="text-right">
-                                <p className="font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
+                                <p className="font-semibold">${Math.round(item.price * item.quantity)}</p>
                                 <Button
                                   variant="ghost"
                                   size="icon"
@@ -174,7 +200,7 @@ export default function ShopPage() {
                         <Separator className="my-4" />
                         <div className="flex justify-between font-bold text-lg">
                           <p>Total</p>
-                          <p>${cartTotal.toFixed(2)}</p>
+                          <p>${Math.round(cartTotal)}</p>
                         </div>
                         <Button asChild className="w-full mt-4">
                           <Link href="/checkout">Continuar</Link>
