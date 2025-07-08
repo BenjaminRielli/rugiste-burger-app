@@ -137,7 +137,7 @@ export default function CheckoutPage() {
                                 </p>
                               </div>
                               <p className="font-semibold">
-                                ${(item.price * item.quantity).toFixed(2)}
+                                {Math.round(item.price * item.quantity)}
                               </p>
                             </div>
                           ))}
@@ -145,7 +145,7 @@ export default function CheckoutPage() {
                         <Separator className="my-4" />
                         <div className="flex justify-between font-bold text-lg">
                           <p>Total</p>
-                          <p>${cartTotal.toFixed(2)}</p>
+                          <p>${Math.round(cartTotal)}</p>
                         </div>
                       </>
                     ) : (
@@ -158,7 +158,7 @@ export default function CheckoutPage() {
           </div>
         </main>
       </div>
-      <CheckoutModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <CheckoutModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} deliveryMethod={deliveryMethod} />
     </>
   )
 } 

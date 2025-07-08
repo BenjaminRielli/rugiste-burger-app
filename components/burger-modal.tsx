@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useCart } from "@/context/cart-context"
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import { useToast } from "@/components/ui/use-toast"
 
 interface MenuItem {
   id: number
@@ -33,16 +34,15 @@ interface BurgerModalProps {
 
 const ingredients = [
   { id: "bacon", name: "Extra Carne", price: 100 },
-  { id: "extra-cheese", name: "Extra Queso", price: 100 },
-  { id: "pickles", name: "Extra Cebolla", price: 20 },
-  { id: "lettuce", name: "Lechuga", price: 100 },
-  { id: "tomato", name: "Tomate", price: 100 },
-  { id: "onions", name: "Cebolla", price: 100 },
-  
+  { id: "extra-cheese", name: "Extra Queso", price: 45 },
+  { id: "pickles", name: "Extra Cebolla", price: 45 },
+  { id: "lettuce", name: "Mayonesa", price: 0 },
+  { id: "tomato", name: "Salsa Rugiste", price: 0 },
 ]
 
 export function BurgerModal({ isOpen, onClose, burger }: BurgerModalProps) {
   const { addToCart } = useCart()
+  const { toast } = useToast()
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([])
   const [comment, setComment] = useState("")
   const [totalPrice, setTotalPrice] = useState(burger?.price || 0)
@@ -96,6 +96,11 @@ export function BurgerModal({ isOpen, onClose, burger }: BurgerModalProps) {
         description: customDescriptionParts.join("\n"),
       }
       addToCart(customizedBurger)
+      toast({
+        title: "Producto agregado correctamente al carrito",
+        description: "",
+        duration: 2000,
+      })
       onClose()
     }
   }
@@ -103,20 +108,26 @@ export function BurgerModal({ isOpen, onClose, burger }: BurgerModalProps) {
   if (!burger) return null
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={onClose} modal={true}>
       <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
           <DialogTitle>{burger.name}</DialogTitle>
         </DialogHeader>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
-          <div className="aspect-square relative">
-            <Image
-              src={burger.image}
-              alt={burger.name}
-              fill
-              className="rounded-lg object-cover"
-            />
+        <div className="overflow-y-auto max-h-[60vh] md:max-h-none px-1 pb-24 md:pb-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
+            <div className="aspect-square relative">
+              <Image
+                src={burger.image}
+                alt={burger.name}
+                fill
+                className="rounded-lg object-cover"
+              />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground mt-2 mb-4">{burger.description}</p>
+            </div>
           </div>
+          {/* Customization section below, full width */}
           <div>
             <h3 className="text-lg font-semibold mb-2">Personalizar Ingredientes</h3>
             <div className="space-y-2">
@@ -129,7 +140,7 @@ export function BurgerModal({ isOpen, onClose, burger }: BurgerModalProps) {
                   <Label htmlFor={ingredient.id} className="flex-1">
                     {ingredient.name}
                   </Label>
-                  <span>+${ingredient.price.toFixed(2)}</span>
+                  <span>+${Math.round(ingredient.price)}</span>
                 </div>
               ))}
             </div>
@@ -145,8 +156,8 @@ export function BurgerModal({ isOpen, onClose, burger }: BurgerModalProps) {
           </div>
         </div>
         <Separator />
-        <DialogFooter className="flex items-center justify-between sm:justify-between w-full">
-          <p className="text-xl font-bold">Total: ${totalPrice.toFixed(2)}</p>
+        <DialogFooter className="flex items-center justify-between sm:justify-between w-full bg-white md:static fixed bottom-0 left-0 right-0 z-10 p-4 md:p-0 border-t md:border-0">
+          <p className="text-xl font-bold">Total: ${Math.round(totalPrice)}</p>
           <Button onClick={handleAddToCart}>Añadir al Carrito</Button>
         </DialogFooter>
       </DialogContent>

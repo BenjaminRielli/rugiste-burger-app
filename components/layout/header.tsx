@@ -10,7 +10,7 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-4">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/rugisteburger.png" alt="Rugiste Burger Logo" width={45} height={45} className="rounded-full shadow-md" />
+            <Image src="/roar.gif" alt="Rugiste Burger Logo" width={45} height={45} className="rounded-full shadow-md" />
             <span className="text-2xl font-extrabold tracking-tight text-primary drop-shadow-sm">Rugiste Burger</span>
           </Link>
         </div>
@@ -34,7 +34,7 @@ export function Header() {
             <SheetContent side="left">
               <nav className="grid gap-6 text-lg font-medium">
                 <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
-                  <Image src="/rugisteburger.png" alt="Rugiste Burger Logo" width={45} height={45} className="rounded-full shadow-md" />
+                  <Image src="/roar.gif" alt="Rugiste Burger Logo" width={45} height={45} className="rounded-full shadow-md" />
                   <span>Rugiste Burger</span>
                 </Link>
                 <Link href="/" className="hover:text-primary/80 hover:underline underline-offset-4">
