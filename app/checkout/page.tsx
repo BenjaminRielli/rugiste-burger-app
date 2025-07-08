@@ -1,32 +1,32 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { useCart } from "@/context/cart-context"
-import { Header } from "@/components/layout/header"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { CheckoutModal } from "@/components/checkout-modal"
-import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { useCart } from "@/context/cart-context";
+import { Header } from "@/components/layout/header";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { CheckoutModal } from "@/components/checkout-modal";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export default function CheckoutPage() {
-  const { cartItems, cartTotal, clearCart } = useCart()
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [deliveryMethod, setDeliveryMethod] = useState("delivery")
+  const { cartItems, cartTotal, clearCart } = useCart();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deliveryMethod, setDeliveryMethod] = useState("delivery");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
     if (cartItems.length > 0) {
-      setIsModalOpen(true)
-      clearCart()
+      setIsModalOpen(true);
+      clearCart();
     } else {
-      alert("El carrito está vacío.")
+      alert("El carrito está vacío.");
     }
-  }
+  };
 
   return (
     <>
@@ -39,7 +39,7 @@ export default function CheckoutPage() {
                 <ArrowLeft className="h-6 w-6" />
                 <span className="sr-only">Volver a la tienda</span>
               </Link>
-              <h1 className="text-3xl font-bold">Continuar</h1>
+              <h1 className="text-3xl font-bold">Volver a la tienda</h1>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
               <div>
@@ -55,13 +55,19 @@ export default function CheckoutPage() {
                         className="grid grid-cols-2 gap-4"
                       >
                         <div>
-                          <RadioGroupItem value="delivery" id="delivery" className="peer sr-only" />
+                          <RadioGroupItem
+                            value="delivery"
+                            id="delivery"
+                            className="peer sr-only"
+                          />
                           <Label
                             htmlFor="delivery"
                             className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                           >
                             Delivery
-                            <span className="text-xs text-muted-foreground mt-1">Entre 20' y 45'</span>
+                            <span className="text-xs text-muted-foreground mt-1">
+                              Entre 20' y 45'
+                            </span>
                           </Label>
                         </div>
                         <div>
@@ -75,7 +81,9 @@ export default function CheckoutPage() {
                             className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                           >
                             Take Away
-                            <span className="text-xs text-muted-foreground mt-1">Entre 10' y 20'</span>
+                            <span className="text-xs text-muted-foreground mt-1">
+                              Entre 10' y 20'
+                            </span>
                           </Label>
                         </div>
                       </RadioGroup>
@@ -88,19 +96,57 @@ export default function CheckoutPage() {
                         <div className="space-y-4 pt-4">
                           <div className="space-y-2">
                             <Label htmlFor="name">Nombre Completo</Label>
-                            <Input id="name" placeholder="John Doe" required />
+                            <Input id="name" placeholder="" required />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="email">Email</Label>
+                            <Input id="email" placeholder="" required />
                           </div>
                           <div className="space-y-2">
                             <Label htmlFor="address">Dirección</Label>
-                            <Input id="address" placeholder="123 Main St" required />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="city">Ciudad</Label>
-                            <Input id="city" placeholder="Anytown" required />
+                            <Input id="address" placeholder="" required />
                           </div>
                           <div className="space-y-2">
                             <Label htmlFor="zip">Código Postal</Label>
-                            <Input id="zip" placeholder="12345" required />
+                            <Input id="zip" placeholder="" required />
+                          </div>
+                          {/* Payment Method Selection */}
+                          <div className="space-y-2 pt-2">
+                            <Label className="font-semibold">
+                              Método de Pago
+                            </Label>
+                            <RadioGroup
+                              defaultValue="efectivo"
+                              className="flex gap-4"
+                              name="payment-method"
+                            >
+                              <div>
+                                <RadioGroupItem
+                                  value="efectivo"
+                                  id="efectivo"
+                                  className="peer sr-only"
+                                />
+                                <Label
+                                  htmlFor="efectivo"
+                                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover px-4 py-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
+                                >
+                                  Efectivo
+                                </Label>
+                              </div>
+                              <div>
+                                <RadioGroupItem
+                                  value="debito"
+                                  id="debito"
+                                  className="peer sr-only"
+                                />
+                                <Label
+                                  htmlFor="debito"
+                                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover px-4 py-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
+                                >
+                                  Débito/Crédito
+                                </Label>
+                              </div>
+                            </RadioGroup>
                           </div>
                         </div>
                       )}
@@ -114,7 +160,7 @@ export default function CheckoutPage() {
               <div>
                 <Card>
                   <CardHeader>
-                    <CardTitle>Resumen del Pedido</CardTitle>   
+                    <CardTitle>Resumen del Pedido</CardTitle>
                   </CardHeader>
                   <CardContent>
                     {cartItems.length > 0 ? (
@@ -127,9 +173,11 @@ export default function CheckoutPage() {
                                 {item.name.toLowerCase().includes("(custom)") &&
                                   item.description && (
                                     <div className="text-sm text-muted-foreground">
-                                      {item.description.split("\n").map((line, i) => (
-                                        <div key={i}>{line}</div>
-                                      ))}
+                                      {item.description
+                                        .split("\n")
+                                        .map((line, i) => (
+                                          <div key={i}>{line}</div>
+                                        ))}
                                     </div>
                                   )}
                                 <p className="text-sm text-muted-foreground">
@@ -149,7 +197,9 @@ export default function CheckoutPage() {
                         </div>
                       </>
                     ) : (
-                      <p className="text-muted-foreground">El carrito está vacío.</p>
+                      <p className="text-muted-foreground">
+                        El carrito está vacío.
+                      </p>
                     )}
                   </CardContent>
                 </Card>
@@ -158,7 +208,11 @@ export default function CheckoutPage() {
           </div>
         </main>
       </div>
-      <CheckoutModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} deliveryMethod={deliveryMethod} />
+      <CheckoutModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        deliveryMethod={deliveryMethod}
+      />
     </>
-  )
-} 
+  );
+}

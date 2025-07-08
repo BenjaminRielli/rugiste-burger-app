@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { ShoppingCart, Trash2 } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { Header } from "@/components/layout/header"
-import { useCart } from "@/context/cart-context"
-import { BurgerModal } from "@/components/burger-modal"
-import { useToast } from "@/components/ui/use-toast"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { ShoppingCart, Trash2 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { Header } from "@/components/layout/header";
+import { useCart } from "@/context/cart-context";
+import { BurgerModal } from "@/components/burger-modal";
+import { useToast } from "@/components/ui/use-toast";
 
 interface MenuItem {
   id: number;
@@ -24,14 +24,16 @@ const menuItems: MenuItem[] = [
   {
     id: 1,
     name: "Classic Burger",
-    description: "Hamburguesa clásica con lechuga, tomate, cebolla y nuestra salsa especial.",
+    description:
+      "Hamburguesa clásica con lechuga, tomate, cebolla y nuestra salsa especial.",
     price: 450,
     image: "/clasica.png",
   },
   {
     id: 2,
     name: "Rugiste Burger",
-    description: "Hamburguesa con pepinillos, cheddar, cebolla, ketchup y nuestra salsa especial.",
+    description:
+      "Hamburguesa con pepinillos, cheddar, cebolla, ketchup y nuestra salsa especial.",
     price: 470,
     image: "/rugiste.png",
   },
@@ -52,7 +54,8 @@ const menuItems: MenuItem[] = [
   {
     id: 5,
     name: "Veggie Burger",
-    description: "Hamburguesa vegetariana con medallón de vegetales, lechuga, tomate, cebolla y salsa especial.",
+    description:
+      "Hamburguesa vegetariana con medallón de vegetales, lechuga, tomate, cebolla y salsa especial.",
     price: 430,
     image: "/veggie.png",
   },
@@ -77,32 +80,32 @@ const menuItems: MenuItem[] = [
     price: 100,
     image: "/agua.webp",
   },
-]
+];
 
 export default function ShopPage() {
-  const { cartItems, addToCart, removeFromCart, cartTotal } = useCart()
-  const [selectedBurger, setSelectedBurger] = useState<MenuItem | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const { toast } = useToast()
+  const { cartItems, addToCart, removeFromCart, cartTotal } = useCart();
+  const [selectedBurger, setSelectedBurger] = useState<MenuItem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { toast } = useToast();
 
   const handleOpenModal = (burger: MenuItem) => {
-    setSelectedBurger(burger)
-    setIsModalOpen(true)
-  }
+    setSelectedBurger(burger);
+    setIsModalOpen(true);
+  };
 
   const handleCloseModal = () => {
-    setSelectedBurger(null)
-    setIsModalOpen(false)
-  }
+    setSelectedBurger(null);
+    setIsModalOpen(false);
+  };
 
   const handleAddToCart = (item: MenuItem) => {
-    addToCart(item)
+    addToCart(item);
     toast({
       title: "Producto agregado correctamente al carrito",
       description: "",
       duration: 2000,
-    })
-  }
+    });
+  };
 
   return (
     <>
@@ -118,12 +121,20 @@ export default function ShopPage() {
                     <Card key={item.id}>
                       <CardContent className="p-4 flex flex-col h-full justify-between">
                         <div>
-                          <div className="aspect-square relative mb-4 cursor-pointer" onClick={() =>
-                            item.name.toLowerCase().includes("burger")
-                              ? handleOpenModal(item)
-                              : undefined
-                          }>
-                            <Image src={item.image} alt={item.name} fill className="rounded-t-lg object-cover" />
+                          <div
+                            className="aspect-square relative mb-4 cursor-pointer"
+                            onClick={() =>
+                              item.name.toLowerCase().includes("burger")
+                                ? handleOpenModal(item)
+                                : undefined
+                            }
+                          >
+                            <Image
+                              src={item.image}
+                              alt={item.name}
+                              fill
+                              className="rounded-t-lg object-cover"
+                            />
                           </div>
                           <h3
                             className="text-lg font-semibold cursor-pointer "
@@ -135,10 +146,14 @@ export default function ShopPage() {
                           >
                             {item.name}
                           </h3>
-                          <p className="text-sm text-muted-foreground line-clamp-2 min-h-[40px]">{item.description}</p>
+                          <p className="text-sm text-muted-foreground line-clamp-2 min-h-[40px]">
+                            {item.description}
+                          </p>
                         </div>
                         <div className="flex justify-between items-center mt-4">
-                          <p className="text-lg font-bold">${Math.round(item.price)}</p>
+                          <p className="text-lg font-bold">
+                            ${Math.round(item.price)}
+                          </p>
                           <Button
                             size="sm"
                             onClick={() =>
@@ -156,7 +171,7 @@ export default function ShopPage() {
                 </div>
               </div>
               <div className="sticky top-24">
-                <Card>
+                <Card id="my-order">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <ShoppingCart className="h-5 w-5" />
@@ -168,15 +183,20 @@ export default function ShopPage() {
                       <>
                         <div className="space-y-4">
                           {cartItems.map((item) => (
-                            <div key={item.id} className="flex justify-between items-start">
+                            <div
+                              key={item.id}
+                              className="flex justify-between items-start"
+                            >
                               <div>
                                 <p className="font-semibold">{item.name}</p>
                                 {item.name.toLowerCase().includes("(custom)") &&
                                   item.description && (
                                     <div className="text-sm text-muted-foreground">
-                                      {item.description.split("\n").map((line, i) => (
-                                        <div key={i}>{line}</div>
-                                      ))}
+                                      {item.description
+                                        .split("\n")
+                                        .map((line, i) => (
+                                          <div key={i}>{line}</div>
+                                        ))}
                                     </div>
                                   )}
                                 <p className="text-sm text-muted-foreground">
@@ -184,7 +204,9 @@ export default function ShopPage() {
                                 </p>
                               </div>
                               <div className="text-right">
-                                <p className="font-semibold">${Math.round(item.price * item.quantity)}</p>
+                                <p className="font-semibold">
+                                  ${Math.round(item.price * item.quantity)}
+                                </p>
                                 <Button
                                   variant="ghost"
                                   size="icon"
@@ -207,7 +229,9 @@ export default function ShopPage() {
                         </Button>
                       </>
                     ) : (
-                      <p className="text-muted-foreground">El carrito está vacío.</p>
+                      <p className="text-muted-foreground">
+                        El carrito está vacío.
+                      </p>
                     )}
                   </CardContent>
                 </Card>
@@ -222,5 +246,5 @@ export default function ShopPage() {
         burger={selectedBurger}
       />
     </>
-  )
-} 
+  );
+}
