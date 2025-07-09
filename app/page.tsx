@@ -100,7 +100,7 @@ export default function Home() {
             </Link>
           </nav>
           <Button asChild>
-            <Link href="/shop">PEDIR</Link>
+            <Link href="/shop">TIENDA</Link>
           </Button>
         </div>
       </header>
