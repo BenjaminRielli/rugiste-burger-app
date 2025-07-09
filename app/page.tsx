@@ -1,188 +1,345 @@
+"use client";
 import Link from "next/link"
-import { ArrowRight, BarChart2, Globe2, LineChart, TrendingUp, Play } from "lucide-react"
-
+import { ArrowRight, ShoppingCart, Users, Target, FileText, AlertCircle, Rocket, ChartBar } from "lucide-react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { useRef, useEffect, useState } from "react";
+
+function Carousel() {
+  const images = [
+    { src: "/Imagen2.jpg", alt: "Equipo Rugiste Burger 1" },
+    { src: "/Imagen3.jpg", alt: "Equipo Rugiste Burger 2" },
+    { src: "/Imagen4.jpg", alt: "Equipo Rugiste Burger 3" },
+  ];
+  const [current, setCurrent] = useState(0);
+
+  const prev = () => setCurrent((c) => (c === 0 ? images.length - 1 : c - 1));
+  const next = () => setCurrent((c) => (c === images.length - 1 ? 0 : c + 1));
+
+  useEffect(() => {
+    const timer = setInterval(next, 4000);
+    return () => clearInterval(timer);
+  }, [current]);
+
+  return (
+    <div className="relative flex flex-col items-center mt-12 w-full md:w-2/3 mx-auto">
+      <div className="w-full h-[350px] flex items-center justify-center overflow-hidden rounded-xl shadow-lg bg-muted">
+        <Image
+          src={images[current].src}
+          alt={images[current].alt}
+          width={600}
+          height={400}
+          className="object-contain w-full h-full transition-all duration-700 bg-white" />
+      </div>
+      <div className="flex justify-center gap-4 mt-4">
+        <button
+          onClick={prev}
+          className="px-3 py-1 rounded-full bg-primary text-white hover:bg-primary/80 transition"
+          aria-label="Anterior"
+        >
+          {"<"}
+        </button>
+        <button
+          onClick={next}
+          className="px-3 py-1 rounded-full bg-primary text-white hover:bg-primary/80 transition"
+          aria-label="Siguiente"
+        >
+          {">"}
+        </button>
+      </div>
+      <div className="flex gap-2 mt-2">
+        {images.map((_, idx) => (
+          <span
+            key={idx}
+            className={`block w-3 h-3 rounded-full ${idx === current ? "bg-primary" : "bg-muted-foreground/30"}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-            <TrendingUp className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">RUGISTE  BURGERS</span>
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/shop" className="flex items-center gap-2">
+              <Image
+                src="/roar.gif"
+                alt="Rugiste Burger Logo"
+                width={45}
+                height={45}
+                className="rounded-full shadow-md"
+              />
+              <span className="text-2xl font-extrabold tracking-tight text-primary drop-shadow-sm">
+                Rugiste Burger
+              </span>
+            </Link>
+          </div>
           <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
-            <Link href="#features" className="transition-colors hover:text-primary">
-              Features
+            <Link href="#objetivo" className="transition-colors hover:text-primary">
+              Objetivo
             </Link>
-            <Link href="#markets" className="transition-colors hover:text-primary">
-              Markets
+            <Link href="#producto" className="transition-colors hover:text-primary">
+              Producto
             </Link>
-            <Link href="#demo" className="transition-colors hover:text-primary">
-              Demo
+            <Link href="#equipo" className="transition-colors hover:text-primary">
+              Equipo
             </Link>
-            <Link href="#pricing" className="transition-colors hover:text-primary">
-              Pricing
+            <Link href="#presupuesto-detallado" className="transition-colors hover:text-primary">
+              Presupuesto
+            </Link>
+            <Link href="#restricciones" className="transition-colors hover:text-primary">
+              Restricciones
+            </Link>
+            <Link href="#resultados-principales" className="transition-colors hover:text-primary">
+              Resultados
             </Link>
           </nav>
           <Button asChild>
-            <Link href="/shop">SHOP</Link>
+            <Link href="/shop">PEDIR</Link>
           </Button>
         </div>
       </header>
+
       <main className="flex-1">
-        <section className="relative">
+        <section className="relative" id="objetivo">
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background">
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
           </div>
 
-          <div className="container relative">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 py-24">
-              <div className="space-y-8">
-                <div className="space-y-6">
-                  <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-                    Make Your Trading{" "}
-                    <span className="bg-gradient-to-r from-primary to-primary/50 bg-clip-text text-transparent">
-                      Exceptional
-                    </span>
-                  </h1>
-                  <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-                    Achieve precision and confidence in your trades with our advanced technical indicator. Experience up
-                    to 95% accuracy across multiple markets.
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-4">
-                  <Button size="lg" className="gap-2">
-                    Start Trading <ArrowRight className="h-4 w-4" />
-                  </Button>
-                  <Button size="lg" variant="outline">
-                    View Demo
-                  </Button>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-8">
-                  <div className="space-y-2">
-                    <h4 className="text-4xl font-bold text-primary">95%</h4>
-                    <p className="text-sm text-muted-foreground">Accuracy Rate</p>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-4xl font-bold text-primary">24/7</h4>
-                    <p className="text-sm text-muted-foreground">Market Coverage</p>
-                  </div>
-                  <div className="space-y-2">
-                    <h4 className="text-4xl font-bold text-primary">10k+</h4>
-                    <p className="text-sm text-muted-foreground">Active Traders</p>
-                  </div>
-                </div>
-              </div>
-              <div className="relative hidden lg:block">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 rounded-2xl blur-3xl" />
-                <div className="relative bg-card rounded-2xl border p-6 shadow-2xl">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-1">
-                        <h3 className="font-semibold">Ved Indicator Signal</h3>
-                        <p className="text-sm text-muted-foreground">Real-time market analysis</p>
-                      </div>
-                      <Button variant="outline" size="sm">
-                        Live Demo
-                      </Button>
-                    </div>
-                    <div className="aspect-[4/3] rounded-lg bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 flex items-center justify-center">
-                      <BarChart2 className="h-24 w-24 text-primary/40" />
-                    </div>
-                    <div className="grid grid-cols-3 gap-4">
-                      {[1, 2, 3].map((i) => (
-                        <div key={i} className="space-y-2">
-                          <div className="h-2 rounded-full bg-primary/20" />
-                          <div className="h-2 w-2/3 rounded-full bg-muted" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="markets" className="bg-muted/50 py-24">
-          <div className="container space-y-12">
-            <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-4xl md:text-5xl">
-              Markets We Cover
-            </h2>
-            <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3">
-              <Card>
-                <CardContent className="p-6 space-y-2">
-                  <BarChart2 className="h-12 w-12 text-primary" />
-                  <h3 className="text-xl font-bold">Forex Markets</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Trade major, minor, and exotic currency pairs with confidence using our precise signals.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6 space-y-2">
-                  <LineChart className="h-12 w-12 text-primary" />
-                  <h3 className="text-xl font-bold">Indian Markets</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Get accurate signals for Nifty, Bank Nifty, and other Indian market instruments.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6 space-y-2">
-                  <Globe2 className="h-12 w-12 text-primary" />
-                  <h3 className="text-xl font-bold">Global Markets</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Access signals for commodities, indices, and cryptocurrency markets worldwide.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        <section id="demo" className="py-24">
-          <div className="container space-y-12">
-            <div className="text-center space-y-4">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">See It In Action</h2>
-              <p className="text-xl text-muted-foreground max-w-[42rem] mx-auto">
-                Watch how the Ved Indicator provides precise trading signals in real-time market conditions.
+          <div className="container relative py-24">
+            <div className="max-w-3xl mx-auto text-center space-y-8">
+              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
+                Proyecto{" "}
+                <span className="bg-gradient-to-r from-primary to-primary/50 bg-clip-text text-transparent">
+                  Rugiste Burger
+                </span>
+              </h1>
+              <p className="text-xl text-muted-foreground">
+                Diseñar y desarrollar una propuesta integral para la creación de una hamburguesería, desde la construcción de la identidad de la marca, la definición del menú, el diseño del local y la estrategia de marketing.
               </p>
-            </div>
-            <div className="max-w-4xl mx-auto">
-              <div className="relative aspect-video rounded-xl overflow-hidden">
-                <iframe
-                  className="absolute inset-0 w-full h-full"
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                  title="Ved Indicator Demo"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8">
+                <div className="space-y-2">
+                  <Target className="h-6 w-6 mx-auto text-primary" />
+                  <h4 className="font-semibold">Objetivo</h4>
+                </div>
+                <div className="space-y-2">
+                  <Users className="h-6 w-6 mx-auto text-primary" />
+                  <h4 className="font-semibold">Equipo</h4>
+                </div>
+                <div className="space-y-2">
+                  <FileText className="h-6 w-6 mx-auto text-primary" />
+                  <h4 className="font-semibold">Plan</h4>
+                </div>
+                <div className="space-y-2">
+                  <ChartBar className="h-6 w-6 mx-auto text-primary" />
+                  <h4 className="font-semibold">Resultados</h4>
+                </div>
               </div>
-            </div>
-            <div className="text-center">
-              <Button size="lg" className="gap-2">
-                <Play className="w-4 h-4" /> Start Your Free Trial
-              </Button>
             </div>
           </div>
         </section>
+
+        <section id="proposito" className="bg-muted/50 py-24">
+          <div className="container max-w-3xl mx-auto text-center space-y-8">
+            <h2 className="text-3xl font-bold tracking-tighter mb-6">Propósito del Proyecto</h2>
+            <p className="text-lg text-muted-foreground">
+              Rugiste Burger surge con el propósito de ofrecer una alternativa innovadora dentro del sector gastronómico, con la frescura de alimentos e ideas que teníamos en mente.
+              El proyecto busca formar tanto un espacio atractivo, como accesible, donde la calidad y la experiencia sean prioridad.
+            </p>
+          </div>
+        </section>
+
+        <section id="propuesta" className="bg-muted/50 py-24">
+          <div className="container space-y-12">
+            <div className="max-w-3xl mx-auto text-center">
+              <h2 className="text-3xl font-bold tracking-tighter mb-6">Propuesta de Valor</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card>
+                <CardContent className="p-6 space-y-2">
+                  <h3 className="text-xl font-bold">Calidad Premium</h3>
+                  <p className="text-muted-foreground">Ingredientes frescos y recetas originales</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6 space-y-2">
+                  <h3 className="text-xl font-bold">Ambiente Único</h3>
+                  <p className="text-muted-foreground">Espacio diseñado para una experiencia completa</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6 space-y-2">
+                  <h3 className="text-xl font-bold">Precios Accesibles</h3>
+                  <p className="text-muted-foreground">Excelente relación calidad-precio</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        <section id="equipo" className="py-24">
+          <div className="container">
+            <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">Equipo del Proyecto</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-5xl mx-auto">
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="font-bold mb-2">Ignacio Berra</h3>
+                  <p className="text-muted-foreground">Encargado de cocina/Menú</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="font-bold mb-2">Sofía Guerrico</h3>
+                  <p className="text-muted-foreground">Encargada de Marketing</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="font-bold mb-2">Benjamín Rielli</h3>
+                  <p className="text-muted-foreground">Encargado de Compras</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="font-bold mb-2">Alejandro Piccardo</h3>
+                  <p className="text-muted-foreground">Encargado de Obras & Proyectos</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="font-bold mb-2">Lucas Giffuni</h3>
+                  <p className="text-muted-foreground">Owner / Sponsor del proyecto</p>
+                </CardContent>
+              </Card>
+            </div>
+            {/* Imágenes debajo del equipo */}
+            <Carousel />
+          </div>
+        </section>
+
+        <section id="interesados" className="bg-muted/50 py-24">
+          <div className="container max-w-3xl mx-auto text-center space-y-8">
+            <h2 className="text-3xl font-bold tracking-tighter mb-6">Partes Interesadas</h2>
+            <ul className="text-lg text-muted-foreground space-y-2">
+              <li>• Proveedores</li>
+              <li>• Intendencia y organismos de control</li>
+              <li>• Ministerio de Salud</li>
+              <li>• Vecinos y comunidad local</li>
+              <li>• Clientes</li>
+              <li>• Owner / Sponsor</li>
+            </ul>
+          </div>
+        </section>
+
+
+
+        <section id="presupuesto-detallado" className="py-24">
+          <div className="container max-w-4xl mx-auto text-center space-y-8">
+            <h2 className="text-3xl font-bold tracking-tighter mb-6">Presupuesto Detallado</h2>
+            <ul className="text-lg text-muted-foreground space-y-2">
+              <li>• Alquiler del local: $60.000</li>
+              <li>• Remodelación y diseño: $50.000</li>
+              <li>• Equipamiento de cocina: $80.000</li>
+              <li>• Trámites y habilitaciones: $30.000</li>
+              <li>• Desarrollo de menú: $9.000</li>
+              <li>• Stock inicial: $50.000</li>
+              <li>• Identidad visual: $8.000</li>
+              <li>• Campaña pre-apertura: $20.000</li>
+              <li>• Sistema delivery: $15.000</li>
+              <li>• Reserva contigencia: $35.000</li>
+              <li className="font-semibold">Total estimado: $357.000</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="restricciones" className="py-24">
+          <div className="container max-w-3xl mx-auto text-center space-y-8">
+            <h2 className="text-3xl font-bold tracking-tighter mb-6">Restricciones del Proyecto</h2>
+            <ul className="text-lg text-muted-foreground space-y-2">
+              <li>• Duración estimada: 6 meses</li>
+              <li>• Presupuesto inicial limitado</li>
+              <li>• Cumplimiento de requisitos legales y habilitaciones</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="riesgos" className="bg-muted/50 py-24">
+          <div className="container">
+            <h2 className="text-3xl font-bold tracking-tighter text-center mb-12">Gestión de Riesgos y Oportunidades</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              <Card>
+                <CardContent className="p-6 space-y-4">
+                  <h3 className="text-xl font-bold flex items-center gap-2">
+                    <AlertCircle className="h-5 w-5 text-yellow-500" />
+                    Riesgos Identificados
+                  </h3>
+                  <ul className="space-y-2 text-muted-foreground">
+                    <li>• Tiempo limitado de capacitación del personal</li>
+                    <li>• Presupuesto ajustado para marketing</li>
+                    <li>• Costos de alquiler y operación</li>
+                    <li>• Requisitos legales y habilitaciones</li>
+                  </ul>
+                  <p className="text-sm text-muted-foreground">
+                    Acciones: Capacitación intensiva, búsqueda de alianzas, control de gastos y asesoría legal.
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6 space-y-4">
+                  <h3 className="text-xl font-bold flex items-center gap-2">
+                    <Rocket className="h-5 w-5 text-primary" />
+                    Oportunidades
+                  </h3>
+                  <ul className="space-y-2 text-muted-foreground">
+                    <li>• Integración con plataformas de delivery</li>
+                    <li>• Colaboraciones con marcas reconocidas</li>
+                    <li>• Desarrollo de delivery propio</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        <section id="resultados-principales" className="py-24">
+          <div className="container max-w-4xl mx-auto text-center space-y-8">
+            <h2 className="text-3xl font-bold tracking-tighter mb-6">Resultados Principales del Proyecto</h2>
+            <ul className="text-lg text-muted-foreground space-y-2">
+              <li>• Identidad de marca desarrollada</li>
+              <li>• Menú definido y probado</li>
+              <li>• Local remodelado y habilitado</li>
+              <li>• Estrategia de marketing lanzada</li>
+              <li>• Personal capacitado</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="indicadores" className="bg-muted/50 py-24">
+          <div className="container max-w-4xl mx-auto text-center space-y-8">
+            <h2 className="text-3xl font-bold tracking-tighter mb-6">Indicadores de Éxito</h2>
+            <ul className="text-lg text-muted-foreground space-y-2">
+              <li>• Menú con 6-10 variedades desarrolladas</li>
+              <li>• Diseño del local 100% completado</li>
+              <li>• Identidad de marca implementada</li>
+              <li>• Cumplimiento de plazos y presupuesto</li>
+              <li>• Satisfacción del cliente en la apertura</li>
+            </ul>
+          </div>
+        </section>
+
       </main>
+
       <footer className="border-t py-8">
         <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
-          <p className="text-sm text-muted-foreground">© 2024 Ved Indicator. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">© 2025 Rugiste Burger. Todos los derechos reservados.</p>
           <div className="flex items-center space-x-4">
             <Link href="#" className="text-sm text-muted-foreground hover:text-primary">
-              Terms
-            </Link>
-            <Link href="#" className="text-sm text-muted-foreground hover:text-primary">
-              Privacy
-            </Link>
-            <Link href="#" className="text-sm text-muted-foreground hover:text-primary">
-              Contact
+              Contacto
             </Link>
           </div>
         </div>

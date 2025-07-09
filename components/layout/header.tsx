@@ -36,12 +36,6 @@ export function Header() {
             >
               Home
             </Link>
-            <Link
-              href="/shop"
-              className="transition-colors duration-200 hover:text-primary/80 hover:underline underline-offset-4"
-            >
-              Tienda
-            </Link>
           </nav>
           <Sheet>
             <SheetTrigger asChild>
