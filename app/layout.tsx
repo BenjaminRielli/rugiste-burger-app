@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Rugiste Burger",
-  description: "Los mejores hamburguesas de la ciudad.",
+  description: "Las mejores hamburguesas de la ciudad.",
 };
 
 export default function RootLayout({
