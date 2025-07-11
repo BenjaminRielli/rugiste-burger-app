@@ -13,7 +13,7 @@ export default function MobileTabBar() {
     0
   );
 
-  if (pathname === "/checkout") return null;
+  if (pathname !== "/shop") return null;
 
   const handleScrollToOrder = () => {
     const orderSection = document.getElementById("my-order");
